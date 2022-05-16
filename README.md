@@ -1,0 +1,2 @@
+# SoftwareProtection
+Средства защиты ПО
