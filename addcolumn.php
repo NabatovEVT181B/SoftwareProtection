@@ -20,7 +20,10 @@ include "BaseVar.php";
 		
 		$sql="alter table `$tabler` add `$column_title` $type ";
 		$bd->query($sql);
-		$zapros = "SELECT * from $tabler";
+		$zapros = "SELECT * from :tabler";
+		$stm = $bd->prepare($zapros);
+		$stm -> bindValue(:tabler,$tabler);
+		$stm -> execute();
 		vivod($bd, $zapros, $tabler); 	// Функция библиотеки TableT
 	}
     

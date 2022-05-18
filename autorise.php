@@ -5,10 +5,16 @@ include "dictionary.php";
 	if(isset($_POST['go']))
 	{
 		$sug = $_POST['sugar'];
-		$res = $bd_xleb->query("SELECT login FROM maslo WHERE login ='$sug'");
-		$records = $res->fetchall(PDO::FETCH_ASSOC);
-		$ches = $bd_xleb->query(" SELECT password FROM maslo WHERE login ='$sug'");
-		$pass = $ches->fetchall(PDO::FETCH_ASSOC);
+		$res = $bd_xleb->query("SELECT login FROM maslo WHERE login =:sug");
+		$stm = $bd_xleb->prepare($res)
+		$stm -> bindValue (':sug', $sug);
+		$stm -> execute();
+		$records = $stm->fetchall(PDO::FETCH_ASSOC);
+		$ches = $bd_xleb->query(" SELECT password FROM maslo WHERE login = :sug");
+		$stm = $bd_xleb->prepare($ches)
+		$stm -> bindValue (':sug', $sug);
+		$stm -> execute();
+		$pass = $stm->fetchall(PDO::FETCH_ASSOC);
 		
 		try{
 			avtoris($pass);

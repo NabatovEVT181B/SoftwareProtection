@@ -18,9 +18,8 @@
 	$stm->bindValue(':peredac',$peredac);
 	$stm->bindValue(':ter', $ter);
 	$stm->execute();
-	$date = $stm->fetchall;	
+	$date = $stm->fetchall(PDO::FETCH_ASSOC);
 	$res = $bd->query($we);
-	$date = $res->fetchall(PDO::FETCH_ASSOC);
 	$qer = "";
 	foreach($date as $a => $items)
 	{
