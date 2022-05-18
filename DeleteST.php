@@ -5,15 +5,20 @@
 	$ter = $_POST['picd'];
 
 
-	//ХРЕНЬ ДЛЯ ПОЛУЧЕНИЯ НАЗВАНИЯ АТРИБУТА
+	//ПОЛУЧЕНИЕ НАЗВАНИЯ АТРИБУТА
 	$res = $bd->query("select * from $peredac");
 	for ($i = 0; $i< $res->columnCount(); $i++)
 	{
 		$col = $res->getColumnMeta($i);
 	    $colums[]=$col['name'];
 	}
-	//ХРЕНЬ ДЛЯ ПОЛУЧЕИЯ СТРОКИ С ID
-	$we = "SELECT * from $peredac where id = $ter";	
+	//ПОЛУЧЕИЕ СТРОКИ С ID
+	$we = "SELECT * from :peredac where id = :ter";
+	$stm = $db->prepare($we);
+	$stm->bindValue(':peredac',$peredac);
+	$stm->bindValue(':ter', $ter);
+	$stm->execute();
+	$date = $stm->fetchall;	
 	$res = $bd->query($we);
 	$date = $res->fetchall(PDO::FETCH_ASSOC);
 	$qer = "";
@@ -26,7 +31,7 @@
 			$i++;
 		}
 	} 
-	// тригер 
+	// ТРИГГЕР 
 	$droptr = "DROP TRIGGER IF EXISTS `1$peredac`;";
 	$bd->query($droptr);
 	$trigD = "CREATE TRIGGER `1$peredac` AFTER DELETE ON `$peredac` FOR EACH ROW 
