@@ -1,7 +1,7 @@
 <?php 
 	include "BaseVar.php";
 	$name_table = $_POST['pic'];
-	$zapros = "SELECT * from `$name_table`";
+	$zapros = "SELECT * from :name_table";
 	$stm = $name_table->prepare($zapros)
 	$stm -> bindValue (':name_table', $name_table);
 	$stm -> execute();
